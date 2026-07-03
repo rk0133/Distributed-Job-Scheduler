@@ -17,27 +17,69 @@ const Job = sequelize.define(
 
     description: {
       type: DataTypes.TEXT,
-      allowNull: true,
     },
 
     status: {
       type: DataTypes.ENUM(
-        "PENDING",
+        "QUEUED",
         "RUNNING",
         "COMPLETED",
         "FAILED"
       ),
-      defaultValue: "PENDING",
+      defaultValue: "QUEUED",
     },
 
     priority: {
-      type: DataTypes.ENUM("LOW", "MEDIUM", "HIGH"),
+      type: DataTypes.ENUM(
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ),
       defaultValue: "MEDIUM",
     },
 
     scheduledAt: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
+    },
+
+    payload: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+
+    retryCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+
+    workerId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+
+    // ===========================
+    // NEW FIELDS
+    // ===========================
+
+    isRecurring: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+
+    cronExpression: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    nextRunAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+
+    batchId: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

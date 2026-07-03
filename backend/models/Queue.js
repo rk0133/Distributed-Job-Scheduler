@@ -15,6 +15,11 @@ const Queue = sequelize.define(
       allowNull: false,
     },
 
+    projectId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
     priority: {
       type: DataTypes.ENUM(
         "LOW",
@@ -30,9 +35,43 @@ const Queue = sequelize.define(
       defaultValue: 5,
     },
 
+    retryLimit: {
+      type: DataTypes.INTEGER,
+      defaultValue: 3,
+    },
+
+    retryStrategy: {
+      type: DataTypes.ENUM(
+        "FIXED",
+        "LINEAR",
+        "EXPONENTIAL"
+      ),
+      defaultValue: "FIXED",
+    },
+
+    retryDelay: {
+      type: DataTypes.INTEGER,
+      defaultValue: 5000,
+    },
+
     paused: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+
+    totalJobs: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+
+    completedJobs: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+
+    failedJobs: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
   },
   {
