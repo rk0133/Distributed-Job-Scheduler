@@ -6,21 +6,36 @@ export default function DashboardLayout({ children }) {
     <div
       style={{
         display: "flex",
+        minHeight: "100vh",
         background: "#f4f7fb",
       }}
     >
+      {/* Sidebar */}
       <Sidebar />
 
-      <div style={{ flex: 1 }}>
+      {/* Main Content */}
+      <div
+        style={{
+          flex: 1,
+          marginLeft: "240px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Navbar */}
         <Navbar />
 
-        <div
+        {/* Page Content */}
+        <main
           style={{
             padding: "30px",
+            marginTop: "70px",
+            minHeight: "100vh",
+            overflowY: "auto",
           }}
         >
           {children}
-        </div>
+        </main>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ const connection = require("../config/redis");
 
 const Job = require("../models/Job");
 const Worker = require("../models/Worker");
+const JobExecution = require("../models/JobExecution");
 const deadLetterQueue = require("../scheduler/deadLetterQueue");
 
 // Worker ID in database
@@ -53,6 +54,13 @@ const worker = new BullWorker(
       dbJob.workerId = dbWorker.id;
       await dbJob.save();
     }
+    const execution = await JobExecution.create({
+  jobId: dbJob.id,
+  workerId: dbWorker.id,
+  status: "RUNNING",
+  retryAttempt: job.attemptsMade,
+  startedAt: new Date(),
+});
 
     dbWorker.status = "BUSY";
     dbWorker.currentJobId = dbJob.id;
@@ -71,6 +79,12 @@ const worker = new BullWorker(
     dbWorker.currentJobId = null;
     dbWorker.processedJobs += 1;
     await dbWorker.save();
+    execution.status = "COMPLETED";
+execution.completedAt = new Date();
+execution.duration =
+  execution.completedAt.getTime() - execution.startedAt.getTime();
+
+await execution.save();
 
     console.log("✅ Job Completed");
 

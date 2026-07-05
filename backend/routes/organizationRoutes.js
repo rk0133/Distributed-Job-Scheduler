@@ -14,7 +14,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 // All Organization routes are protected
 router.post("/", authMiddleware, createOrganization);
 
-router.get("/", authMiddleware, getOrganizations);
+router.get("/", getOrganizations);
 
 router.get("/:id", authMiddleware, getOrganizationById);
 

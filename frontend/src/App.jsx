@@ -6,6 +6,8 @@ import Queues from "./pages/Queues";
 import Workers from "./pages/Workers";
 import Organizations from "./pages/Organizations";
 import Projects from "./pages/Projects";
+import CreateJob from "./pages/CreateJob";
+import ExecutionLogs from "./pages/ExecutionLogs";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <Route path="/workers" element={<Workers />} />
       <Route path="/organizations" element={<Organizations />} />
       <Route path="/projects" element={<Projects />} />
+      <Route path="/create-job" element={<CreateJob />} />
+      <Route path="/execution-logs" element={<ExecutionLogs />} />
     </Routes>
   );
 }

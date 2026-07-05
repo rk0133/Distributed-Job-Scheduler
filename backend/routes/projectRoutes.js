@@ -12,7 +12,7 @@ const {
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/", authMiddleware, createProject);
-router.get("/", authMiddleware, getAllProjects);
+router.get("/", getAllProjects);
 router.get("/:id", authMiddleware, getProjectById);
 router.put("/:id", authMiddleware, updateProject);
 router.delete("/:id", authMiddleware, deleteProject);

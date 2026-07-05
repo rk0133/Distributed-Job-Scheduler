@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
 
@@ -41,6 +42,9 @@ const jobRoutes = require("./routes/jobRoutes");
 const queueRoutes = require("./routes/queueRoutes");
 const workerRoutes = require("./routes/workerRoutes");
 const metricsRoutes = require("./routes/metricsRoutes");
+const jobExecutionRoutes = require("./routes/jobExecutionRoutes");
+const retryRoutes = require("./routes/retryRoutes");
+const queueControlRoutes = require("./routes/queueControlRoutes");
 
 const app = express();
 
@@ -59,6 +63,13 @@ app.use((req, res, next) => {
 // ===============================
 // Middleware
 // ===============================
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 // ===============================
@@ -95,12 +106,20 @@ app.get("/raushan-test", (req, res) => {
 // API ROUTES
 // ===============================
 app.use("/api/auth", authRoutes);
+app.use("/api/organizations", (req, res, next) => {
+  console.log("✅ ORGANIZATION ROUTE REACHED");
+  next();
+});
+
 app.use("/api/organizations", organizationRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/queues", queueRoutes);
 app.use("/api/workers", workerRoutes);
 app.use("/api/metrics", metricsRoutes);
+app.use("/api/job-executions", jobExecutionRoutes);
+app.use("/api/retry", retryRoutes);
+app.use("/api/queue-control", queueControlRoutes);
 
 // ===============================
 // 404
